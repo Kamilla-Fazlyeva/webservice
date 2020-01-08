@@ -4,7 +4,7 @@
 # Log file
 *.log
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.nar
@@ -13,5 +13,10 @@
 *.tar.gz
 *.rar
 
+# Maven
 /target/
+
+# IntelliJ
 /.idea/
+.iml
+
