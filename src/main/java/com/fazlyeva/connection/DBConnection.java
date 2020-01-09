@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class PersonDB {
+public class DBConnection {
 
     public static Connection getDBConnection() throws SQLException {
 

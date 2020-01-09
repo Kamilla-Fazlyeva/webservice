@@ -1,6 +1,6 @@
 package com.fazlyeva.dao;
 
-import com.fazlyeva.connection.PersonDB;
+import com.fazlyeva.connection.DBConnection;
 import com.fazlyeva.model.Person;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PersonDao implements IPersonDao {
 
-    Connection dbConnection = PersonDB.getDBConnection();
+    Connection dbConnection = DBConnection.getDBConnection();
 
     public PersonDao() throws SQLException {
     }

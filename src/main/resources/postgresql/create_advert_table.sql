@@ -1,0 +1,11 @@
+CREATE TABLE advert 
+(
+    advert_id SERIAL PRIMARY KEY NOT NULL,
+	person_id INTEGER NOT NULL,
+	header VARCHAR(300) NOT NULL,
+	body VARCHAR(1000) NOT NULL,
+	category VARCHAR(50) NOT NULL,
+	phone VARCHAR(12) NOT NULL,
+	date TIMESTAMP NOT NULL,
+	FOREIGN KEY (person_id) REFERENCES person (user_id)
+);

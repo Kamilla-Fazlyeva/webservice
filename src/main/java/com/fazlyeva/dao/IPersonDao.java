@@ -1,7 +1,6 @@
 package com.fazlyeva.dao;
 
 import com.fazlyeva.model.Person;
-
 import java.util.List;
 
 public interface IPersonDao {
