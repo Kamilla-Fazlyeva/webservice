@@ -9,9 +9,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
-
+@Path("/advert")
 public class AdvertController {
 
     private IAdvertService advertService = new AdvertService();
@@ -19,7 +21,6 @@ public class AdvertController {
     public AdvertController() throws SQLException {
     }
 
-    @Path("/adverts")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllAdverts() {
@@ -34,7 +35,7 @@ public class AdvertController {
         }
     }
 
-    @Path("/advert/{id}")
+    @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAdvertById(@PathParam("id") Integer id) {
@@ -50,8 +51,34 @@ public class AdvertController {
         }
     }
 
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response newAdvert(@FormParam("header") String header, @FormParam("body") String body,
+                              @FormParam("category") String category, @FormParam("phone") String phone,
+                              @FormParam("date") String dateTime, @PathParam("person_id") Integer person_id) {
 
-    @Path("/advert/{id}")
+        Advert advert = new Advert();
+        advert.setHeader(header);
+        advert.setBody(body);
+        advert.setCategory(category);
+        advert.setPhone(phone);
+        advert.setPerson_id(person_id);
+        try {
+            advert.setDateTime(LocalDateTime.parse(dateTime));
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+        }
+
+        boolean success = advertService.createAdvert(advert);
+
+        if (success) {
+            return Response.ok().status(Response.Status.CREATED).build();
+        } else {
+            return Response.notModified().build();
+        }
+    }
+
+    @Path("/{id}")
     @PUT
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response updateAdvert(@FormParam("header") String header, @FormParam("body") String body,
@@ -74,7 +101,7 @@ public class AdvertController {
         }
     }
 
-    @Path("/advert/{id}")
+    @Path("/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeAdvert(@PathParam("id") Integer id) {

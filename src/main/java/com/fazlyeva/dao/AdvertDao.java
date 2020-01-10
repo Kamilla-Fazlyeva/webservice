@@ -137,6 +137,7 @@ public class AdvertDao implements IAdvertDao{
             pr.setString(2, advert.getBody());
             pr.setString(3, advert.getCategory());
             pr.setString(4, advert.getPhone());
+            pr.setInt(5, advert.getId());
             pr.executeUpdate();
             return true;
         } catch (SQLException e) {

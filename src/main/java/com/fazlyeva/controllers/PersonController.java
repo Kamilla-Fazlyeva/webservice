@@ -12,8 +12,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Path("/person")
@@ -112,7 +110,7 @@ public class PersonController {
         }
     }
 
-    @Path("/{person_id}/adverts")
+    @Path("/{person_id}/advert")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllAdvertsByPersonId(@PathParam("person_id") Integer person_id) {
@@ -125,34 +123,6 @@ public class PersonController {
             return Response.ok(jsonFromAdvertList).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
-        }
-    }
-
-    @Path("/{person_id}/advert")
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response newAdvert(@FormParam("header") String header, @FormParam("body") String body,
-                              @FormParam("category") String category, @FormParam("phone") String phone,
-                              @FormParam("date") String dateTime, @PathParam("person_id") Integer person_id) {
-
-        Advert advert = new Advert();
-        advert.setHeader(header);
-        advert.setBody(body);
-        advert.setCategory(category);
-        advert.setPhone(phone);
-        advert.setPerson_id(person_id);
-        try {
-            advert.setDateTime(LocalDateTime.parse(dateTime));
-        } catch (DateTimeParseException e) {
-            e.printStackTrace();
-        }
-
-        boolean success = advertService.createAdvert(advert);
-
-        if (success) {
-            return Response.ok().status(Response.Status.CREATED).build();
-        } else {
-            return Response.notModified().build();
         }
     }
 }
