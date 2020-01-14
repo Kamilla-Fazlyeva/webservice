@@ -2,12 +2,15 @@ package com.fazlyeva.dao;
 
 import com.fazlyeva.connection.DBConnection;
 import com.fazlyeva.model.Advert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdvertDao implements IAdvertDao{
 
+    Logger logger = LoggerFactory.getLogger(AdvertDao.class);
     Connection dbConnection = DBConnection.getDBConnection();
 
     public AdvertDao() throws SQLException {
@@ -33,12 +36,12 @@ public class AdvertDao implements IAdvertDao{
                 advertList.add(advert);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return advertList;
     }
@@ -64,12 +67,12 @@ public class AdvertDao implements IAdvertDao{
                 advertList.add(advert);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return advertList;
     }
@@ -94,12 +97,12 @@ public class AdvertDao implements IAdvertDao{
                 advert.setDateTime(rs.getTimestamp(7).toLocalDateTime());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return advert;
     }
@@ -118,12 +121,12 @@ public class AdvertDao implements IAdvertDao{
             pr.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return false;
     }
@@ -141,12 +144,12 @@ public class AdvertDao implements IAdvertDao{
             pr.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return false;
     }
@@ -159,12 +162,12 @@ public class AdvertDao implements IAdvertDao{
             pr.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return false;
     }

@@ -2,6 +2,8 @@ package com.fazlyeva.dao;
 
 import com.fazlyeva.connection.DBConnection;
 import com.fazlyeva.model.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class PersonDao implements IPersonDao {
 
+    private static final Logger logger = LoggerFactory.getLogger(PersonDao.class);
     Connection dbConnection = DBConnection.getDBConnection();
 
     public PersonDao() throws SQLException {
@@ -36,12 +39,12 @@ public class PersonDao implements IPersonDao {
                 personList.add(person);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return personList;
     }
@@ -63,12 +66,12 @@ public class PersonDao implements IPersonDao {
                 person.setCategory(rs.getString(5));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);;
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return person;
     }
@@ -85,12 +88,12 @@ public class PersonDao implements IPersonDao {
             pr.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);;
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return false;
     }
@@ -108,12 +111,12 @@ public class PersonDao implements IPersonDao {
             pr.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);;
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return false;
     }
@@ -126,12 +129,12 @@ public class PersonDao implements IPersonDao {
             pr.executeUpdate();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection to database failed", e);;
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Connection error", e);
         }
         return false;
     }
