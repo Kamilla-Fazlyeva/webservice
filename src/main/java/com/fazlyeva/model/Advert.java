@@ -1,10 +1,9 @@
 package com.fazlyeva.model;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
-@XmlRootElement(name = "Advert")
+@Schema(name = "Advert")
 public class Advert {
 
     private Integer id;
@@ -19,7 +18,7 @@ public class Advert {
         this.id = id;
     }
 
-    @XmlElement(name = "Advert's unique id in database")
+    @Schema(name = "Advert's unique id in database")
     public Integer getId() {
         return id;
     }
@@ -28,7 +27,7 @@ public class Advert {
         this.person_id = person_id;
     }
 
-    @XmlElement(name = "Person's id in that connected to advert's id")
+    @Schema(name = "Person's id in that connected to advert's id")
     public Integer getPerson_id() {
         return person_id;
     }
@@ -37,7 +36,7 @@ public class Advert {
         this.header = header;
     }
 
-    @XmlElement(name = "Advert's header")
+    @Schema(name = "Advert's header")
     public String getHeader() {
         return header;
     }
@@ -46,7 +45,7 @@ public class Advert {
         this.body = body;
     }
 
-    @XmlElement(name = "Advert's body")
+    @Schema(name = "Advert's body")
     public String getBody() {
         return body;
     }
@@ -55,7 +54,7 @@ public class Advert {
         this.category = category;
     }
 
-    @XmlElement(name = "Advert's category: is person individual or entity (company)")
+    @Schema(name = "Advert's category: is person individual or entity (company)")
     public String getCategory() {
         return category;
     }
@@ -64,7 +63,7 @@ public class Advert {
         this.phone = phone;
     }
 
-    @XmlElement(name = "Person's phone for an advert")
+    @Schema(name = "Person's phone for an advert")
     public String getPhone() {
         return phone;
     }
@@ -73,7 +72,7 @@ public class Advert {
         this.dateTime = dateTime;
     }
 
-    @XmlElement(name = "Local time when advert was created")
+    @Schema(name = "Local time when advert was created")
     public LocalDateTime getDateTime() {
         return dateTime;
     }

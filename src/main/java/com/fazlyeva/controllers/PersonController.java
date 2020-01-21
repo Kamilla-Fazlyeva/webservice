@@ -60,7 +60,7 @@ public class PersonController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findPersonById(@Parameter(description = "Person id that need to get the person's data",
-                                       required = true) @PathParam("id") Integer id) {
+                                       required = true) @PathParam("id") int id) {
 
         Person person = personService.getPersonById(id);
 
@@ -81,21 +81,8 @@ public class PersonController {
                     @ApiResponse(responseCode = "304", description = "Not modified")
             })
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response newPerson(@Parameter(description = "Name of a new person", required = true)
-                                  @FormParam("name") String name,
-                              @Parameter(description = "Surname of a new person", required = true)
-                              @FormParam("surname") String surname,
-                              @Parameter(description = "New person's unique email", required = true)
-                                  @FormParam("email") String email,
-                              @Parameter(description = "New person's category: individual or entity (company)",
-                                      required = true) @FormParam("category") String category) {
-
-        Person person = new Person();
-        person.setName(name);
-        person.setSurname(surname);
-        person.setEmail(email);
-        person.setCategory(category);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response newPerson(Person person) {
 
         boolean success = personService.createPerson(person);
 
@@ -115,22 +102,8 @@ public class PersonController {
             })
     @Path("/{id}")
     @PUT
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response updatePerson(@QueryParam(value = "Person's name that need to be updated")
-                                     @FormParam("name") String name,
-                                 @QueryParam(value = "Person's surname that need to be updated")
-                                 @FormParam("surname") String surname,
-                                 @QueryParam(value = "Person's email that need to be updated")
-                                     @FormParam("email") String email, @FormParam("category") String category,
-                                 @Parameter (description = "Person's id that need to be updated", required = true)
-                                     @PathParam("id") Integer id) {
-
-        Person person = new Person();
-        person.setId(id);
-        person.setName(name);
-        person.setSurname(surname);
-        person.setEmail(email);
-        person.setCategory(category);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updatePerson(Person person, @PathParam("id") Integer id) {
 
         boolean success = personService.editPerson(person, id);
 
@@ -152,7 +125,7 @@ public class PersonController {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public Response removePerson(@Parameter (description = "Person's id that need to be deleted from database",
-            required = true) @PathParam("id") Integer id) {
+            required = true) @PathParam("id") int id) {
 
         boolean success = personService.deletePerson(id);
 

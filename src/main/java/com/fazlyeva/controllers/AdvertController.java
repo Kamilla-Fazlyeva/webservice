@@ -14,8 +14,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Path("/advert")
@@ -79,28 +77,10 @@ public class AdvertController {
                     @ApiResponse(responseCode = "304", description = "Not modified")
             })
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response newAdvert(@QueryParam(value = "Advert's header that need to be created")
-                                  @FormParam("header") String header,
-                              @QueryParam(value = "New advert's body") @FormParam("body") String body,
-                              @QueryParam(value = "New advert's category") @FormParam("category") String category,
-                              @QueryParam(value = "Person's phone for a new advert") @FormParam("phone") String phone,
-                              @QueryParam(value = "New advert's date") @FormParam("date") String dateTime,
-                              @Parameter(description = "Person id that belongs to a new advert", required = true)
-                                  @PathParam("person_id") Integer person_id) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response newAdvert(Advert advert, @PathParam("person_id") Integer person_id) {
 
-        Advert advert = new Advert();
-        advert.setHeader(header);
-        advert.setBody(body);
-        advert.setCategory(category);
-        advert.setPhone(phone);
         advert.setPerson_id(person_id);
-        try {
-            advert.setDateTime(LocalDateTime.parse(dateTime));
-        } catch (DateTimeParseException e) {
-            e.printStackTrace();
-        }
-
         boolean success = advertService.createAdvert(advert);
 
         if (success) {
@@ -119,24 +99,8 @@ public class AdvertController {
             })
     @Path("/{id}")
     @PUT
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response updateAdvert(@QueryParam(value = "Advert's header that need to be updated")
-                                     @FormParam("header") String header,
-                                 @QueryParam(value = "Advert's body that need to be updated")
-                                 @FormParam("body") String body,
-                                 @QueryParam(value = "Advert's category that need to be updated")
-                                     @FormParam("category") String category,
-                                 @QueryParam(value = "Person's phone for an advert that need to be updated")
-                                     @FormParam("phone") String phone,
-                                 @Parameter(description = "Advert's id that need to be found", required = true)
-                                     @PathParam("id") Integer id) {
-
-        Advert advert = new Advert();
-        advert.setId(id);
-        advert.setHeader(header);
-        advert.setBody(body);
-        advert.setCategory(category);
-        advert.setPhone(phone);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateAdvert(Advert advert, @PathParam("id") Integer id) {
 
         boolean success = advertService.editAdvert(advert, id);
 

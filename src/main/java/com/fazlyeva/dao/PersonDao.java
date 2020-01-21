@@ -4,7 +4,6 @@ import com.fazlyeva.connection.DBConnection;
 import com.fazlyeva.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,12 +29,8 @@ public class PersonDao implements IPersonDao {
                     "category from person order by user_id");
             ResultSet rs = pr.executeQuery();
             while(rs.next()) {
-                Person person = new Person();
-                person.setId(rs.getInt(1));
-                person.setName(rs.getString(2));
-                person.setSurname(rs.getString(3));
-                person.setEmail(rs.getString(4));
-                person.setCategory(rs.getString(5));
+                Person person = new Person(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5));
                 personList.add(person);
             }
         } catch (SQLException e) {
@@ -58,12 +53,8 @@ public class PersonDao implements IPersonDao {
             pr.setInt(1, id);
             ResultSet rs = pr.executeQuery();
             while(rs.next()) {
-                person = new Person();
-                person.setId(rs.getInt(1));
-                person.setName(rs.getString(2));
-                person.setSurname(rs.getString(3));
-                person.setEmail(rs.getString(4));
-                person.setCategory(rs.getString(5));
+                person = new Person(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5));
             }
         } catch (SQLException e) {
             logger.error("Connection to database failed", e);;

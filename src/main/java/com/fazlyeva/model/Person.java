@@ -1,27 +1,33 @@
 package com.fazlyeva.model;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "Person")
+@Schema(name = "Person")
 public class Person {
 
-    private Integer id;
+    private int id;
     private String name;
     private String surname;
     private String email;
     private String category;
 
-    public void setId(Integer id) {
+    public Person(int id, String name, String surname, String email, String category) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.category = category;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    @XmlElement(name = "Person's unique id in database")
-    public Integer getId() {
+    @Schema(name = "Person's unique id in database")
+    public int getId() {
         return id;
     }
 
-    @XmlElement(name = "Person's name")
+    @Schema(name = "Person's name")
     public String getName() {
         return name;
     }
@@ -30,7 +36,7 @@ public class Person {
         this.name = name;
     }
 
-    @XmlElement(name = "Person's surname")
+    @Schema(name = "Person's surname")
     public String getSurname() {
         return surname;
     }
@@ -39,7 +45,7 @@ public class Person {
         this.surname = surname;
     }
 
-    @XmlElement(name = "Person's unique email")
+    @Schema(name = "Person's unique email")
     public String getEmail() {
         return email;
     }
@@ -48,7 +54,7 @@ public class Person {
         this.email = email;
     }
 
-    @XmlElement(name = "Person's category: individual or entity (company)")
+    @Schema(name = "Person's category: individual or entity (company)")
     public String getCategory() {
         return category;
     }
