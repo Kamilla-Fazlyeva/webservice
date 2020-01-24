@@ -1,5 +1,9 @@
 package com.fazlyeva.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
@@ -13,6 +17,20 @@ public class Advert {
     private String category;
     private String phone;
     private LocalDateTime dateTime;
+
+    public Advert() {
+    }
+
+    public Advert(int id, Integer person_id, String header, String body, String category,
+                  String phone, LocalDateTime dateTime) {
+        this.id = id;
+        this.person_id = person_id;
+        this.header = header;
+        this.body = body;
+        this.category = category;
+        this.phone = phone;
+        this.dateTime = dateTime;
+    }
 
     public void setId(Integer id) {
         this.id = id;
@@ -74,6 +92,7 @@ public class Advert {
 
     @Schema(name = "Local time when advert was created")
     public LocalDateTime getDateTime() {
+        dateTime = LocalDateTime.now();
         return dateTime;
     }
 }

@@ -4,6 +4,8 @@ import com.fazlyeva.connection.DBConnection;
 import com.fazlyeva.model.Advert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.ws.rs.PathParam;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
