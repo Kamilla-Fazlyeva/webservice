@@ -80,7 +80,6 @@ public class AdvertController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newAdvert(Advert advert, @PathParam("person_id") Integer person_id) {
 
-        advert.setPerson_id(person_id);
         boolean success = advertService.createAdvert(advert);
 
         if (success) {
