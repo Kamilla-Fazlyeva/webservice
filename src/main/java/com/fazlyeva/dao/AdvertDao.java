@@ -4,11 +4,12 @@ import com.fazlyeva.connection.DBConnection;
 import com.fazlyeva.model.Advert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.ws.rs.PathParam;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.fazlyeva.enums.WebServiceConstants.DatabaseQuery.*;
+import static com.fazlyeva.enums.WebServiceConstants.LoggerMessages.*;
 
 public class AdvertDao implements IAdvertDao{
 
@@ -24,7 +25,7 @@ public class AdvertDao implements IAdvertDao{
         List<Advert> advertList = new ArrayList<Advert>();
 
         try {
-            PreparedStatement pr = dbConnection.prepareStatement("select * from advert order by advert_id");
+            PreparedStatement pr = dbConnection.prepareStatement(SELECT_ADVERT_ALL.value);
             ResultSet rs = pr.executeQuery();
             while(rs.next()) {
                 Advert advert = new Advert();
@@ -36,14 +37,15 @@ public class AdvertDao implements IAdvertDao{
                 advert.setPhone(rs.getString(6));
                 advert.setDateTime(rs.getTimestamp(7).toLocalDateTime());
                 advertList.add(advert);
+                logger.info(INFO_GET_ADVERTS.value);
             }
         } catch (SQLException e) {
-            logger.error("Connection to database failed", e);
+            logger.error(ERROR_SQL.value, e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            logger.error("Connection error", e);
+            logger.error(ERROR_SQL.value, e);
         }
         return advertList;
     }
@@ -54,7 +56,7 @@ public class AdvertDao implements IAdvertDao{
         List<Advert> advertList = new ArrayList<Advert>();
 
         try {
-            PreparedStatement pr = dbConnection.prepareStatement("select * from advert where person_id=?");
+            PreparedStatement pr = dbConnection.prepareStatement(SELECT_ADVERT_BY_PERSON_ID.value);
             pr.setInt(1, person_id);
             ResultSet rs = pr.executeQuery();
             while(rs.next()) {
@@ -67,25 +69,24 @@ public class AdvertDao implements IAdvertDao{
                 advert.setPhone(rs.getString(6));
                 advert.setDateTime(rs.getTimestamp(7).toLocalDateTime());
                 advertList.add(advert);
+                logger.info(INFO_GET_PERSON_ADVERTS.value);
             }
         } catch (SQLException e) {
-            logger.error("Connection to database failed", e);
+            logger.error(ERROR_SQL.value, e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            logger.error("Connection error", e);
+            logger.error(ERROR_SQL.value, e);
         }
         return advertList;
     }
 
     @Override
     public Advert getAdvertById(int id) {
-
         Advert advert = null;
-
         try {
-            PreparedStatement pr = dbConnection.prepareStatement("select * from advert where advert_id=?");
+            PreparedStatement pr = dbConnection.prepareStatement(SELECT_ADVERT_BY_ID.value);
             pr.setInt(1, id);
             ResultSet rs = pr.executeQuery();
             while(rs.next()) {
@@ -97,14 +98,15 @@ public class AdvertDao implements IAdvertDao{
                 advert.setCategory(rs.getString(5));
                 advert.setPhone(rs.getString(6));
                 advert.setDateTime(rs.getTimestamp(7).toLocalDateTime());
+                logger.info(INFO_GET_ADVERT.value);
             }
         } catch (SQLException e) {
-            logger.error("Connection to database failed", e);
+            logger.error(ERROR_SQL.value, e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            logger.error("Connection error", e);
+            logger.error(ERROR_SQL.value, e);
         }
         return advert;
     }
@@ -112,8 +114,7 @@ public class AdvertDao implements IAdvertDao{
     @Override
     public boolean createAdvert(Advert advert) {
         try {
-            PreparedStatement pr = dbConnection.prepareStatement("insert into advert "
-                    + "(person_id, header, body, category, phone, date) values (?, ?, ?, ?, ?, ?)");
+            PreparedStatement pr = dbConnection.prepareStatement(CREATE_ADVERT.value);
             pr.setInt(1, advert.getPerson_id());
             pr.setString(2, advert.getHeader());
             pr.setString(3, advert.getBody());
@@ -121,14 +122,15 @@ public class AdvertDao implements IAdvertDao{
             pr.setString(5, advert.getPhone());
             pr.setTimestamp(6, Timestamp.valueOf(advert.getDateTime()));
             pr.executeUpdate();
+            logger.info(INFO_CREATE_ADVERT.value);
             return true;
         } catch (SQLException e) {
-            logger.error("Connection to database failed", e);
+            logger.error(ERROR_SQL.value, e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            logger.error("Connection error", e);
+            logger.error(ERROR_SQL.value, e);
         }
         return false;
     }
@@ -136,22 +138,22 @@ public class AdvertDao implements IAdvertDao{
     @Override
     public boolean editAdvert(Advert advert, int id) {
         try {
-            PreparedStatement pr = dbConnection.prepareStatement("update advert set "
-                    + "header=?, body=?, category=?, phone=? where advert_id=?");
+            PreparedStatement pr = dbConnection.prepareStatement(UPDATE_ADVERT.value);
             pr.setString(1,advert.getHeader());
             pr.setString(2, advert.getBody());
             pr.setString(3, advert.getCategory());
             pr.setString(4, advert.getPhone());
             pr.setInt(5, advert.getId());
             pr.executeUpdate();
+            logger.info(INFO_UPDATE_ADVERT.value);
             return true;
         } catch (SQLException e) {
-            logger.error("Connection to database failed", e);
+            logger.error(ERROR_SQL.value, e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            logger.error("Connection error", e);
+            logger.error(ERROR_SQL.value, e);
         }
         return false;
     }
@@ -159,17 +161,18 @@ public class AdvertDao implements IAdvertDao{
     @Override
     public boolean deleteAdvert(int id) {
         try {
-            PreparedStatement pr = dbConnection.prepareStatement("delete from advert where advert_id=?");
+            PreparedStatement pr = dbConnection.prepareStatement(DELETE_ADVERT.value);
             pr.setInt(1, id);
             pr.executeUpdate();
+            logger.info(INFO_DELETE_ADVERT.value);
             return true;
         } catch (SQLException e) {
-            logger.error("Connection to database failed", e);
+            logger.error(ERROR_SQL.value, e);
         }
         try {
             dbConnection.close();
         } catch (SQLException e) {
-            logger.error("Connection error", e);
+            logger.error(ERROR_SQL.value, e);
         }
         return false;
     }

@@ -5,11 +5,11 @@ import com.fazlyeva.service.AdvertService;
 import com.fazlyeva.service.IAdvertService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,12 +24,11 @@ public class AdvertController {
     public AdvertController() throws SQLException {
     }
 
-    @Operation(summary = "List of all adverts",
-            responses = {
-                    @ApiResponse(description = "This operation gets the full list of person's adverts in database",
-                            content = @Content(schema = @Schema(implementation = Advert.class))),
-                    @ApiResponse(responseCode = "200", description = "All adverts in the database are found"),
-                    @ApiResponse(responseCode = "404", description = "Not found")
+    @ApiOperation(value = "Get all adverts in the database",
+            response = Advert.class)
+                    @ApiResponses(value = {
+                        @ApiResponse(code = 200, message = "All adverts in the database are found"),
+                        @ApiResponse(code = 404, message = "Not found")
             })
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,17 +44,16 @@ public class AdvertController {
         }
     }
 
-    @Operation(summary = "Get advert by id", operationId = "id",
-            responses = {
-                    @ApiResponse(description = "This operation gets the advert by its id in database",
-                            content = @Content(schema = @Schema(implementation = Advert.class))),
-                    @ApiResponse(responseCode = "200", description = "All by id is found"),
-                    @ApiResponse(responseCode = "404", description = "Not found")
+    @ApiOperation(value = "Get advert by its id",
+            response = Advert.class)
+                    @ApiResponses(value = {
+                        @ApiResponse(code = 200, message = "Advert by id is found"),
+                        @ApiResponse(code = 404, message = "Not found")
             })
     @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAdvertById(@Parameter(description = "Advert id that need to get the advert's body",
+    public Response findAdvertById(@ApiParam(value = "Advert's id that needs to get the advert's body",
             required = true) @PathParam("id") Integer id) {
 
         Advert advert = advertService.getAdvertById(id);
@@ -69,12 +67,11 @@ public class AdvertController {
         }
     }
 
-    @Operation(summary = "Create a new advert",
-            responses = {
-                    @ApiResponse(description = "This operation creates a new advert in database",
-                            content = @Content(schema = @Schema(implementation = Advert.class))),
-                    @ApiResponse(responseCode = "201", description = "New advert is created"),
-                    @ApiResponse(responseCode = "304", description = "Not modified")
+    @ApiOperation(value = "Create a new advert",
+            response = Advert.class)
+                    @ApiResponses(value = {
+                        @ApiResponse(code = 201, message = "New advert is created"),
+                        @ApiResponse(code = 304, message = "Not modified")
             })
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -89,12 +86,11 @@ public class AdvertController {
         }
     }
 
-    @Operation(summary = "Updates the advert", operationId = "id",
-            responses = {
-                    @ApiResponse(description = "This operation updates the data of advert in database",
-                            content = @Content(schema = @Schema(implementation = Advert.class))),
-                    @ApiResponse(responseCode = "204", description = "Advert is updated"),
-                    @ApiResponse(responseCode = "304", description = "Not modified")
+    @ApiOperation(value = "Update the advert",
+            response = Advert.class)
+                    @ApiResponses(value = {
+                        @ApiResponse(code = 204, message = "Advert is updated"),
+                        @ApiResponse(code = 304, message = "Not modified")
             })
     @Path("/{id}")
     @PUT
@@ -110,17 +106,16 @@ public class AdvertController {
         }
     }
 
-    @Operation(summary = "Delete the advert", operationId = "id",
-            responses = {
-                    @ApiResponse(description = "This operation deletes the person's advert in database",
-                            content = @Content(schema = @Schema(implementation = Advert.class))),
-                    @ApiResponse(responseCode = "204", description = "Advert is deleted"),
-                    @ApiResponse(responseCode = "304", description = "Not modified")
+    @ApiOperation(value = "Delete the advert",
+            response = Advert.class)
+                    @ApiResponses(value = {
+                        @ApiResponse(code = 204, message = "Advert is deleted"),
+                        @ApiResponse(code = 304, message = "Not modified")
             })
     @Path("/{id}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeAdvert(@Parameter(description = "Advert's id that need ro be deleted from database",
+    public Response removeAdvert(@ApiParam(value = "Advert's id that needs ro be deleted from database",
             required = true) @PathParam("id") Integer id) {
 
         boolean success = advertService.deleteAdvert(id);

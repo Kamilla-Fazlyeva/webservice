@@ -1,13 +1,11 @@
 package com.fazlyeva.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.time.LocalDateTime;
 
-@Schema(name = "Advert")
+@ApiModel(description = "Advert")
 public class Advert {
 
     private Integer id;
@@ -36,7 +34,7 @@ public class Advert {
         this.id = id;
     }
 
-    @Schema(name = "Advert's unique id in database")
+    @ApiModelProperty(name = "Advert's unique id in database")
     public Integer getId() {
         return id;
     }
@@ -45,7 +43,7 @@ public class Advert {
         this.person_id = person_id;
     }
 
-    @Schema(name = "Person's id in that connected to advert's id")
+    @ApiModelProperty(name = "Person's id in that connected to advert's id")
     public Integer getPerson_id() {
         return person_id;
     }
@@ -54,7 +52,7 @@ public class Advert {
         this.header = header;
     }
 
-    @Schema(name = "Advert's header")
+    @ApiModelProperty(name = "Advert's header")
     public String getHeader() {
         return header;
     }
@@ -63,7 +61,7 @@ public class Advert {
         this.body = body;
     }
 
-    @Schema(name = "Advert's body")
+    @ApiModelProperty(name = "Advert's body")
     public String getBody() {
         return body;
     }
@@ -72,7 +70,7 @@ public class Advert {
         this.category = category;
     }
 
-    @Schema(name = "Advert's category: is person individual or entity (company)")
+    @ApiModelProperty(name = "Advert's category: is person individual or entity (company)")
     public String getCategory() {
         return category;
     }
@@ -81,7 +79,7 @@ public class Advert {
         this.phone = phone;
     }
 
-    @Schema(name = "Person's phone for an advert")
+    @ApiModelProperty(name = "Person's phone for an advert")
     public String getPhone() {
         return phone;
     }
@@ -90,7 +88,7 @@ public class Advert {
         this.dateTime = dateTime;
     }
 
-    @Schema(name = "Local time when advert was created")
+    @ApiModelProperty(name = "Local time when advert was created")
     public LocalDateTime getDateTime() {
         dateTime = LocalDateTime.now();
         return dateTime;

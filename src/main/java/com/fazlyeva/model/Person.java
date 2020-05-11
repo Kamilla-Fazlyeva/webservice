@@ -1,7 +1,8 @@
 package com.fazlyeva.model;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-@Schema(name = "Person")
+@ApiModel(description = "Person")
 public class Person {
 
     private int id;
@@ -25,12 +26,12 @@ public class Person {
         this.id = id;
     }
 
-    @Schema(name = "Person's unique id in database")
+    @ApiModelProperty(name = "Person's unique id in database")
     public int getId() {
         return id;
     }
 
-    @Schema(name = "Person's name")
+    @ApiModelProperty(name = "Person's name")
     public String getName() {
         return name;
     }
@@ -39,7 +40,7 @@ public class Person {
         this.name = name;
     }
 
-    @Schema(name = "Person's surname")
+    @ApiModelProperty(name = "Person's surname")
     public String getSurname() {
         return surname;
     }
@@ -48,7 +49,7 @@ public class Person {
         this.surname = surname;
     }
 
-    @Schema(name = "Person's unique email")
+    @ApiModelProperty(name = "Person's unique email")
     public String getEmail() {
         return email;
     }
@@ -57,7 +58,7 @@ public class Person {
         this.email = email;
     }
 
-    @Schema(name = "Person's category: individual or entity (company)")
+    @ApiModelProperty(name = "Person's category: individual or entity (company)")
     public String getCategory() {
         return category;
     }
