@@ -5,7 +5,10 @@ public class WebServiceConstants {
     public enum Resource {
 
         BASE_URI("URI"),
-        PORT("port");
+        PORT("port"),
+        PATH_API("/api"),
+        PATH_PERSON("/person/"),
+        PATH_ADVERT("/advert/"),;
 
         public final String value;
 
@@ -26,6 +29,26 @@ public class WebServiceConstants {
         Database(String value) {
             this.value = value;
         }
+    }
+
+    public enum Fields {
+
+        ID("id"),
+        ID_PERSON("person_id"),
+        NAME("name"),
+        SURNAME("surname"),
+        EMAIL("email"),
+        CATEGORY("category"),
+        HEADER("header"),
+        BODY("body"),
+        PHONE("phone");
+
+        public final String value;
+
+        Fields(String value) {
+            this.value = value;
+        }
+
     }
 
     public enum DatabaseQuery {
